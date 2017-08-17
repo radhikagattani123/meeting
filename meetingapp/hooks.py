@@ -81,7 +81,7 @@ app_license = "MIT"
 
 doc_events = {
 	"User": {
-		"validate": "meetingapp.api.make_orientation_meeting"
+		"after_insert": "meetingapp.api.make_orientation_meeting"
 	}
 }
 

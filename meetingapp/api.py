@@ -56,16 +56,15 @@ def make_orientation_meeting(doc,method):
 	""" Create an orientation meeting when a new user is added"""
 	print "\n\n\n doc ----- method  ===========",doc.name
 	if frappe.db.exists("User", doc.name): 
-		print "\n\n\n if db exists ======"
 		user_doc = frappe.get_doc("User",doc.name)
 		meet_doc = frappe.new_doc("Meeting")
-		print "\n\n\n if db exists ======",meet_doc
 		meet_doc.title = "Orientation for {0}".format(doc.first_name)
-		print "\n\n\n if db exists ======",meet_doc.title
-		meet_doc.date = timestamp(datetime.datetime.now())
-		print "\n\n\n if db exists ======",meet_doc.date
+		meet_doc.date = add_days(nowdate(),1)
 		meet_doc.status = "Planned"
-		print "\n\n\n if db exists ======",meet_doc.status
+		attendees = meet_doc.append("attendees",{})
+		attendees.attendee = user_doc.name
+		# meet_doc.attendees = [{"attendee" : doc.name}]
+		meet_doc.save()
 
 		# meeting = frappe.get_doc({
 		# 	"doc_type" : "Meeting",
